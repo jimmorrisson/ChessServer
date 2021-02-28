@@ -12,23 +12,31 @@ public class FileServer implements Runnable {
     private final DataInputStream dataInputStream;
     private ObjectInputStream objectInputStream;
     private final int players;
-    private BoardModelManager boardModelManager;
+    // private BoardModelManager boardModelManager;
     private model.Color color;
 
-    public FileServer(final Socket socket, final int players, BoardModelManager boardModelManager) throws IOException {
+    public FileServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
         dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
         dataInputStream = new DataInputStream(clientSocket.getInputStream());
         objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
         this.players = players;
-        this.boardModelManager = boardModelManager;
+        // this.boardModelManager = boardModelManager;
     }
 
     @Override
     public void run() {
         try {
-            System.out.print(dataInputStream.readUTF());
+            // System.out.print(dataInputStream.readUTF());
+            Command cmd = (Command) objectInputStream.readObject();
+            if (cmd.getContext()) {
+                dataOutputStream.writeUTF(BoardModelManager.getInstance().toJSon().toString());
+                // dataOutputStream.writeUTF(boardModelManager.toJSon().toString());
+            }
         } catch (final IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -50,11 +58,12 @@ public class FileServer implements Runnable {
             try {
                 Command cmd = (Command) objectInputStream.readObject();
                 if (cmd.getContext()) {
-                    dataOutputStream.writeUTF(boardModelManager.toJSon().toString());
+                    dataOutputStream.writeUTF(BoardModelManager.getInstance().toJSon().toString());
+                    // dataOutputStream.writeUTF(boardModelManager.toJSon().toString());
                     continue;
                 }
                 System.out.println("Move from: " + cmd.getFrom() + " to: " + cmd.getTo());
-                dataOutputStream.writeUTF(boardModelManager.moveFigure(cmd.getFrom(), cmd.getTo(), color));
+                dataOutputStream.writeUTF(BoardModelManager.getInstance().moveFigure(cmd.getFrom(), cmd.getTo(), color));
                 // System.out.print(dataInputStream.readUTF());
                 
                 // dataOutputStream.writeUTF("Yes");

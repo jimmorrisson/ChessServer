@@ -9,8 +9,16 @@ public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();
     private model.Color currentPlayer = model.Color.White;
     private Figure currentChosenFigure = null;
+    private static BoardModelManager instance = null;
 
-    public BoardModelManager() {
+    private BoardModelManager() {
+    }
+
+    public static BoardModelManager getInstance() {
+        if (instance == null) {
+            instance = new BoardModelManager();
+        }
+        return instance;
     }
 
     public void initializeBoard() {
@@ -71,7 +79,7 @@ public class BoardModelManager implements Observer {
     }
 
     public String moveFigure(Position from, Position to, Color color) {
-        if (currentPlayer.equals(color)) {
+        if (currentPlayer.equals(color) == false) {
             return "Not your turn!";
         }
         currentChosenFigure = findFigure(from, color);
