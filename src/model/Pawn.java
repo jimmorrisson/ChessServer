@@ -30,7 +30,7 @@ public class Pawn extends Figure {
     }
 
     @Override
-    protected boolean isValid(Position position) {
+    public boolean isValid(Position position) {
         if (getColor().equals(model.Color.Black)) {
             if (hasMoved == false) {
                 return (this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY())

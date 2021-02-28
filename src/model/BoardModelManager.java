@@ -64,33 +64,31 @@ public class BoardModelManager implements Observer {
         return null;
     }
 
-    public Figure findFigure(Position position) {
-        return findFigure(position, model.Color.White);
-    }
-
     @Override
     public void update(Position position) {
         if (currentChosenFigure != null) {
             currentChosenFigure.move(position);
             currentChosenFigure = null;
         }
-
-        currentChosenFigure = findFigure(position);
     }
 
     public String moveFigure(Position from, Position to, Color color) {
         if (currentPlayer.equals(color) == false) {
-            return "Not your turn!";
+            return "Not your turn";
         }
         currentChosenFigure = findFigure(from, color);
+        model.Color opposedColor = Utils.getOpposedColor(color);
         if (currentChosenFigure != null) {
-            if (currentChosenFigure.move(to)) {
-                if (currentPlayer.equals(model.Color.White)) {
-                    currentPlayer = model.Color.Black;
-                } else {
-                    currentPlayer = model.Color.White;
+            if (currentChosenFigure.isValid(to)) {
+                Figure figureToRemove = findFigure(to, opposedColor);
+                if (findFigure(to, color) != null) {
+                    return "Field taken";
                 }
-                return "Yes";
+                System.out.println(figureToRemove + " Removed");
+                board.remove(figureToRemove);
+                currentChosenFigure.move(to);
+                currentPlayer =opposedColor;
+                return "yes";
             }
         }
         return "No";

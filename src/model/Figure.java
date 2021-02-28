@@ -31,7 +31,7 @@ public abstract class Figure {
         return true;
     }
 
-    protected abstract boolean isValid(Position position);
+    public abstract boolean isValid(Position position);
 
     @Override
     public String toString() {

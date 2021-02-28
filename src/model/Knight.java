@@ -27,7 +27,7 @@ public class Knight extends Figure {
     }
 
     @Override
-    protected boolean isValid(Position position) {
+    public boolean isValid(Position position) {
         if ((this.position.getX() == (position.getX() - 2) && this.position.getY() == (position.getY() - 1))
                 || (this.position.getX() == (position.getX() - 2) && this.position.getY() == (position.getY() + 1))
                 || (this.position.getX() == (position.getX() + 2) && this.position.getY() == (position.getY() - 1))

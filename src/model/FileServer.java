@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class FileServer implements Runnable {
@@ -11,27 +12,25 @@ public class FileServer implements Runnable {
     private final DataOutputStream dataOutputStream;
     private final DataInputStream dataInputStream;
     private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
     private final int players;
-    // private BoardModelManager boardModelManager;
     private model.Color color;
 
     public FileServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
         dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-        dataInputStream = new DataInputStream(clientSocket.getInputStream());
         objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+        dataInputStream = new DataInputStream(clientSocket.getInputStream());
+        objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         this.players = players;
-        // this.boardModelManager = boardModelManager;
     }
 
     @Override
     public void run() {
         try {
-            // System.out.print(dataInputStream.readUTF());
             Command cmd = (Command) objectInputStream.readObject();
             if (cmd.getContext()) {
                 dataOutputStream.writeUTF(BoardModelManager.getInstance().toJSon().toString());
-                // dataOutputStream.writeUTF(boardModelManager.toJSon().toString());
             }
         } catch (final IOException e) {
             // TODO Auto-generated catch block
