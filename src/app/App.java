@@ -1,6 +1,9 @@
 package app;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,6 +19,7 @@ public class App {
             ServerSocket ss = new ServerSocket(4441);
             System.out.println("Listening on the port 4441");
             int players = 0;
+
             while (true) {
                 Socket socket = ss.accept();
                 Thread socketThread = new Thread(new FileServer(socket, players));

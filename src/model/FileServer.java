@@ -9,21 +9,33 @@ import java.net.Socket;
 
 public class FileServer implements Runnable {
     private final Socket clientSocket;
-    private final DataOutputStream dataOutputStream;
-    private final DataInputStream dataInputStream;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
+    private static DataOutputStream dataOutputStream;
+    private static DataInputStream dataInputStream;
+    private static ObjectInputStream objectInputStream;
+//    private static ObjectOutputStream objectOutputStream;
     private final int players;
     private model.Color color;
 
     public FileServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
-        dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-        objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-        dataInputStream = new DataInputStream(clientSocket.getInputStream());
-        objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+        FileServer.dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+        FileServer.objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+        FileServer.dataInputStream = new DataInputStream(clientSocket.getInputStream());
+//        FileServer.objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         this.players = players;
     }
+    
+//    public void setDataOutputStream(DataOutputStream dataOutputStream) {
+//    	FileServer.dataOutputStream = dataOutputStream;
+//    }    
+//    
+//    public void setDataInputStream(DataInputStream dataInputStream) {
+//    	FileServer.dataInputStream = dataInputStream;
+//    }
+//    
+//    public void setObjectInputStream(ObjectInputStream objectInputStream) {
+//    	FileServer.objectInputStream = objectInputStream;
+//    }
 
     @Override
     public void run() {
@@ -58,14 +70,10 @@ public class FileServer implements Runnable {
                 Command cmd = (Command) objectInputStream.readObject();
                 if (cmd.getContext()) {
                     dataOutputStream.writeUTF(BoardModelManager.getInstance().toJSon().toString());
-                    // dataOutputStream.writeUTF(boardModelManager.toJSon().toString());
                     continue;
                 }
                 System.out.println("Move from: " + cmd.getFrom() + " to: " + cmd.getTo());
                 dataOutputStream.writeUTF(BoardModelManager.getInstance().moveFigure(cmd.getFrom(), cmd.getTo(), color));
-                // System.out.print(dataInputStream.readUTF());
-                
-                // dataOutputStream.writeUTF("Yes");
             } catch (final IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
