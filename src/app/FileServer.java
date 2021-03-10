@@ -1,4 +1,4 @@
-package model;
+
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,7 +14,7 @@ public class FileServer implements Runnable {
     private static ObjectInputStream objectInputStream;
 //    private static ObjectOutputStream objectOutputStream;
     private final int players;
-    private model.Color color;
+    private Color color;
 
     public FileServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
@@ -54,10 +54,10 @@ public class FileServer implements Runnable {
 
         try {
             if (players % 2 == 0) {
-                color = model.Color.White;
+                color = Color.White;
                 dataOutputStream.writeUTF("Player white");
             } else {
-                color = model.Color.Black;
+                color = Color.Black;
                 dataOutputStream.writeUTF("Player black");
             }
         } catch (final IOException e) {

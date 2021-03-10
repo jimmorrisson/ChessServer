@@ -1,11 +1,11 @@
-package model;
+
 
 import org.json.JSONObject;
 
 public class Pawn extends Figure {
     private boolean hasMoved = false;
 
-    public Pawn(Position position, model.Color color) {
+    public Pawn(Position position, Color color) {
         super(position, color);
     }
 
@@ -23,7 +23,7 @@ public class Pawn extends Figure {
 
     @Override
     public String getIcon() {
-        if (this.getColor() == model.Color.Black) {
+        if (this.getColor() == Color.Black) {
             return "♟︎";        
         } 
         return "♙";
@@ -31,7 +31,7 @@ public class Pawn extends Figure {
 
     @Override
     public boolean isValid(Position position) {
-        if (getColor().equals(model.Color.Black)) {
+        if (getColor().equals(Color.Black)) {
             if (hasMoved == false) {
                 return (this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY())
                         || (this.position.getX() == position.getX() && (this.position.getY() - 2) == position.getY());

@@ -1,9 +1,9 @@
-package model;
+
 
 import org.json.JSONObject;
 
 public class Knight extends Figure {
-    public Knight(Position position, model.Color color) {
+    public Knight(Position position, Color color) {
         super(position, color);
     }
 
@@ -20,7 +20,7 @@ public class Knight extends Figure {
 
     @Override
     public String getIcon() {
-        if (this.getColor() == model.Color.Black) {
+        if (this.getColor() == Color.Black) {
             return "♞";
         }
         return "♘";

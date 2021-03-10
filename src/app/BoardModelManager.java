@@ -1,13 +1,13 @@
-package model;
+
 
 import java.util.ArrayList;
 
-import controller.Observer;
+
 import org.json.*;
 
 public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();
-    private model.Color currentPlayer = model.Color.White;
+    private Color currentPlayer = Color.White;
     private Figure currentChosenFigure = null;
     private static BoardModelManager instance = null;
 
@@ -22,34 +22,34 @@ public class BoardModelManager implements Observer {
     }
 
     public void initializeBoard() {
-        board.add(new Pawn(new Position(0, 1), model.Color.White));
-        board.add(new Knight(new Position(1, 0), model.Color.White));
-        board.add(new Pawn(new Position(1, 1), model.Color.White));
-        board.add(new Pawn(new Position(2, 1), model.Color.White));
-        board.add(new Pawn(new Position(3, 1), model.Color.White));
-        board.add(new Pawn(new Position(4, 1), model.Color.White));
-        board.add(new Pawn(new Position(5, 1), model.Color.White));
-        board.add(new Knight(new Position(6, 0), model.Color.White));
-        board.add(new Pawn(new Position(6, 1), model.Color.White));
-        board.add(new Pawn(new Position(7, 1), model.Color.White));
+        board.add(new Pawn(new Position(0, 1), Color.White));
+        board.add(new Knight(new Position(1, 0), Color.White));
+        board.add(new Pawn(new Position(1, 1), Color.White));
+        board.add(new Pawn(new Position(2, 1), Color.White));
+        board.add(new Pawn(new Position(3, 1), Color.White));
+        board.add(new Pawn(new Position(4, 1), Color.White));
+        board.add(new Pawn(new Position(5, 1), Color.White));
+        board.add(new Knight(new Position(6, 0), Color.White));
+        board.add(new Pawn(new Position(6, 1), Color.White));
+        board.add(new Pawn(new Position(7, 1), Color.White));
 
-        board.add(new Pawn(new Position(0, 6), model.Color.Black));
-        board.add(new Knight(new Position(1, 7), model.Color.Black));
-        board.add(new Pawn(new Position(1, 6), model.Color.Black));
-        board.add(new Pawn(new Position(2, 6), model.Color.Black));
-        board.add(new Pawn(new Position(3, 6), model.Color.Black));
-        board.add(new Pawn(new Position(4, 6), model.Color.Black));
-        board.add(new Pawn(new Position(5, 6), model.Color.Black));
-        board.add(new Knight(new Position(6, 7), model.Color.Black));
-        board.add(new Pawn(new Position(6, 6), model.Color.Black));
-        board.add(new Pawn(new Position(7, 6), model.Color.Black));
+        board.add(new Pawn(new Position(0, 6), Color.Black));
+        board.add(new Knight(new Position(1, 7), Color.Black));
+        board.add(new Pawn(new Position(1, 6), Color.Black));
+        board.add(new Pawn(new Position(2, 6), Color.Black));
+        board.add(new Pawn(new Position(3, 6), Color.Black));
+        board.add(new Pawn(new Position(4, 6), Color.Black));
+        board.add(new Pawn(new Position(5, 6), Color.Black));
+        board.add(new Knight(new Position(6, 7), Color.Black));
+        board.add(new Pawn(new Position(6, 6), Color.Black));
+        board.add(new Pawn(new Position(7, 6), Color.Black));
     }
 
     public ArrayList<Figure> getContext() {
         return board;
     }
 
-    public Figure findFigure(Position position, model.Color color) {
+    public Figure findFigure(Position position, Color color) {
         for (Figure figure : board) {
             if (figure.getPosition().equals(position)) {
                 if (figure.getColor().equals(color)) {
@@ -77,7 +77,7 @@ public class BoardModelManager implements Observer {
             return "Not your turn";
         }
         currentChosenFigure = findFigure(from, color);
-        model.Color opposedColor = Utils.getOpposedColor(color);
+        Color opposedColor = Utils.getOpposedColor(color);
         if (currentChosenFigure != null) {
             if (currentChosenFigure.isValid(to)) {
                 Figure figureToRemove = findFigure(to, opposedColor);

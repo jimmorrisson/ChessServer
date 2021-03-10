@@ -1,4 +1,4 @@
-package model;
+
 
 enum Color {
     Black,

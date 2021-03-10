@@ -1,6 +1,6 @@
-package controller;
 
-import model.Position;
+
+
 
 public interface Observable {
     public void addObserver(Observer o);
