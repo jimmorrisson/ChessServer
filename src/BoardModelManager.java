@@ -124,6 +124,7 @@ public class BoardModelManager implements Observer {
 			array.put(figure.toString());
 		}
 		rootObj.put("board", array);
+		rootObj.put("time", currentPlayer.getTimeLeft());
 		return rootObj;
 	}
 }
