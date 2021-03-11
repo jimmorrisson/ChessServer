@@ -1,5 +1,4 @@
 
-
 import org.json.JSONObject;
 import chess.com.*;
 
@@ -25,8 +24,8 @@ public class Pawn extends Figure {
     @Override
     public String getIcon() {
         if (this.getColor() == Color.Black) {
-            return "♟︎";        
-        } 
+            return "♟︎";
+        }
         return "♙";
     }
 
@@ -37,7 +36,7 @@ public class Pawn extends Figure {
                 return (this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY())
                         || (this.position.getX() == position.getX() && (this.position.getY() - 2) == position.getY());
             }
-            return this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY();    
+            return this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY();
         }
         if (hasMoved == false) {
             return (this.position.getX() == position.getX() && (this.position.getY() + 1) == position.getY())

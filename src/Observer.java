@@ -1,6 +1,3 @@
-
-
-
 import chess.com.*;
 
 public interface Observer {

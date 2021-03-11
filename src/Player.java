@@ -1,5 +1,4 @@
 
-
 public class Player {
     private Color color;
 

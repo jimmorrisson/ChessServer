@@ -1,12 +1,7 @@
-
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
@@ -16,13 +11,20 @@ public class App {
             boardManager.initializeBoard();
             ServerSocket ss = new ServerSocket(4441);
             System.out.println("Listening on the port 4441");
-            int players = 0;
+            ArrayList<Player> players = new ArrayList<Player>();
 
             while (true) {
                 Socket socket = ss.accept();
-                Thread socketThread = new Thread(new FileServer(socket, players));
+                Thread socketThread = new Thread(new FileServer(socket, players.size()));
                 socketThread.start();
-                players += 1;
+                Player player = null;
+                if ((players.size() % 2) == 0) {
+                	player = new Player(Color.White);
+                } else {
+                	player = new Player(Color.Black);
+                } 
+                players.add(player);
+                boardManager.addPlayer(player);
             }    
         } catch (IOException e) {
             // TODO Auto-generated catch block

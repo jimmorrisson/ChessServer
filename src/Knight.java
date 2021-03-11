@@ -1,8 +1,5 @@
-
-
 import org.json.JSONObject;
 import chess.com.*;
-
 
 public class Knight extends Figure {
     public Knight(Position position, Color color) {
