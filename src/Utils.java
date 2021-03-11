@@ -1,3 +1,4 @@
+import chess.com.*;
 
 
 public class Utils {

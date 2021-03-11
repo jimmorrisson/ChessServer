@@ -1,6 +1,7 @@
 
 
 import org.json.JSONObject;
+import chess.com.*;
 
 public abstract class Figure {
     protected Position position;

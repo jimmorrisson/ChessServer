@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import org.json.*;
+import chess.com.*;
 
 public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();

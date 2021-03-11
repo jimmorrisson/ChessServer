@@ -1,6 +1,7 @@
 
 
 import org.json.JSONObject;
+import chess.com.*;
 
 public class Pawn extends Figure {
     private boolean hasMoved = false;
