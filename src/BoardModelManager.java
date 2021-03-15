@@ -21,6 +21,7 @@ public class BoardModelManager implements Observer {
 
 	public void initializeBoard() {
 		board.add(new Pawn(new Position(0, 1), Color.White));
+		board.add(new Rook(new Position(0, 0), Color.White));
 		board.add(new Knight(new Position(1, 0), Color.White));
 		board.add(new Pawn(new Position(1, 1), Color.White));
 		board.add(new Pawn(new Position(2, 1), Color.White));
@@ -29,9 +30,11 @@ public class BoardModelManager implements Observer {
 		board.add(new Pawn(new Position(5, 1), Color.White));
 		board.add(new Knight(new Position(6, 0), Color.White));
 		board.add(new Pawn(new Position(6, 1), Color.White));
+		board.add(new Rook(new Position(7, 0), Color.White));
 		board.add(new Pawn(new Position(7, 1), Color.White));
 
 		board.add(new Pawn(new Position(0, 6), Color.Black));
+		board.add(new Rook(new Position(0, 7), Color.Black));
 		board.add(new Knight(new Position(1, 7), Color.Black));
 		board.add(new Pawn(new Position(1, 6), Color.Black));
 		board.add(new Pawn(new Position(2, 6), Color.Black));
@@ -41,6 +44,7 @@ public class BoardModelManager implements Observer {
 		board.add(new Knight(new Position(6, 7), Color.Black));
 		board.add(new Pawn(new Position(6, 6), Color.Black));
 		board.add(new Pawn(new Position(7, 6), Color.Black));
+		board.add(new Rook(new Position(7, 7), Color.Black));
 	}
 
 	public ArrayList<Figure> getContext() {
@@ -124,7 +128,9 @@ public class BoardModelManager implements Observer {
 			array.put(figure.toString());
 		}
 		rootObj.put("board", array);
-		rootObj.put("time", currentPlayer.getTimeLeft());
+
+		rootObj.put("time_white", (players.size() > 0) ? players.get(0).getTimeLeft() : 1000);
+		rootObj.put("time_black", (players.size() > 1) ? players.get(1).getTimeLeft() : 1000);
 		return rootObj;
 	}
 }

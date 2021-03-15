@@ -1,23 +1,14 @@
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import javax.lang.model.util.ElementScanner6;
-
 import chess.com.*;
 
 public class FileServer implements Runnable {
     private final Socket clientSocket;
-    // private static DataOutputStream dataOutputStream;
-    // private DataInputStream dataInputStream;
-    // private ObjectInputStream objectInputStream;
-    // private ObjectOutputStream objectOutputStream;
     private final int players;
-    private Color color;
 
     public FileServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
@@ -27,11 +18,9 @@ public class FileServer implements Runnable {
     @Override
     public void run() {
         ObjectInputStream objectInputStream;
-        DataInputStream dataInputStream;
         ObjectOutputStream objectOutputStream;
         try {
             objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-            dataInputStream = new DataInputStream(clientSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             Color color = ((players % 2) == 0) ? Color.White : Color.Black;
             while (true) {

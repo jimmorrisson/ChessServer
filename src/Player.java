@@ -12,7 +12,6 @@ public class Player {
             @Override
             public void run() {
                 timeLeft -= 1;
-                System.out.println("Time left for player " + color.toString() + " " + timeLeft);
             }
         }, 1000, 1000);
     }
