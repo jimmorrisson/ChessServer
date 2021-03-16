@@ -121,6 +121,9 @@ public class BoardModelManager implements Observer {
 				}
 				System.out.println(figureToRemove + " Removed");
 				board.remove(figureToRemove);
+				if (figureToRemove instanceof King) {
+					return "Player " + currentPlayer.getColor().toString() + " won";
+				}
 				currentChosenFigure.move(to);
 				changePlayer();
 				return "yes";
