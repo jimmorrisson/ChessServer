@@ -1,9 +1,8 @@
-import org.json.JSONObject;
 import chess.com.*;
 
 public class Knight extends Figure {
     public Knight(Position position, Color color) {
-        super(position, color);
+        super(position, color, "Knight");
     }
 
     @Override
@@ -38,15 +37,5 @@ public class Knight extends Figure {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String toString() {
-        JSONObject object = new JSONObject();
-        object.put("type", "Knight");
-        object.put("color", getColor().toString());
-        object.put("x", getPosition().getX());
-        object.put("y", getPosition().getY());
-        return object.toString();
     }
 }
