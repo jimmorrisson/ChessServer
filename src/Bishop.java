@@ -30,21 +30,7 @@ public class Bishop extends Figure {
         int xDifference = position.getX() - this.getPosition().getX();
         int yDifference = position.getY() - this.getPosition().getY();
         if (xDifference != 0 && yDifference != 0 && (Math.abs(xDifference) == Math.abs(yDifference))) {
-            int xDirection = (xDifference < 0) ? -1 : 1;
-            int yDirection = (yDifference < 0) ? -1 : 1;
-
-            for (int iX = xDirection, iY = yDirection; iX != xDifference
-                    && iY != yDifference; iX += xDirection, iY += yDirection) {
-                if (BoardModelManager.getInstance().findFigure(
-                        new Position(this.getPosition().getX() + iX, this.getPosition().getY() + iY),
-                        Color.Black) != null
-                        || BoardModelManager.getInstance().findFigure(
-                                new Position(this.getPosition().getX() + iX, this.getPosition().getY() + iY),
-                                Color.White) != null) {
-                    return false;
-                }
-            }
-            return true;
+            return checkBiasPosition(position, xDifference, yDifference);
         }
         return false;
     }

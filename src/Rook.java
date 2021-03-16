@@ -28,25 +28,9 @@ public class Rook extends Figure {
     @Override
     public boolean isValid(Position position) {
         if ((this.position.getX() - position.getX()) != 0 && (this.position.getY() - position.getY()) == 0) {
-            boolean isPositiveVal = ((position.getX() - this.position.getX()) >= 0) ? true : false;
-            int x = Math.abs(position.getX() - this.position.getX());
-            for (int i = 1; i < x; i++) {
-                Position pos = new Position(this.position.getX() + i * ((isPositiveVal) ? 1 : -1), this.position.getY());
-                if (BoardModelManager.getInstance().findFigure(pos, getColor()) != null) {
-                    return false;
-                }
-            }    
-            return true;
+            return checkHorizontalPosition(position);
         } else if ((this.position.getY() - position.getY()) != 0 && (this.position.getX() - position.getX()) == 0) {
-            boolean isPositiveVal = ((position.getY() - this.position.getY()) >= 0) ? true : false;
-            int y = Math.abs(position.getY() - this.position.getY());
-            for (int i = 1; i < y; i++) {
-                Position pos = new Position(this.position.getX(), this.position.getY() + i * ((isPositiveVal) ? 1 : -1));
-                if (BoardModelManager.getInstance().findFigure(pos, getColor()) != null) {
-                    return false;
-                }
-            }    
-            return true;
+            return checkVerticalPosition(position);
         }
         return false;
     }
