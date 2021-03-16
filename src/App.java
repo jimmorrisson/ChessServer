@@ -8,7 +8,6 @@ public class App {
 
         try {
             BoardModelManager boardManager = BoardModelManager.getInstance();
-            boardManager.initializeBoard();
             ServerSocket ss = new ServerSocket(4441);
             System.out.println("Listening on the port 4441");
             ArrayList<Player> players = new ArrayList<Player>();

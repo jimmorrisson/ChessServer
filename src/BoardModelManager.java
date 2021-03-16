@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import org.json.*;
 import chess.com.*;
 
-public class BoardModelManager implements Observer {
-	private ArrayList<Figure> board = new ArrayList<>();
+public class BoardModelManager implements Observable{
 	private Player currentPlayer = null;
 	private Figure currentChosenFigure = null;
 	private static BoardModelManager instance = null;
 	private ArrayList<Player> players = new ArrayList<>();
+	private ArrayList<Observer> observers = new ArrayList<>();
 
 	private BoardModelManager() {
 	}
@@ -19,44 +19,12 @@ public class BoardModelManager implements Observer {
 		return instance;
 	}
 
-	public void initializeBoard() {
-		board.add(new Pawn(new Position(0, 1), Color.White));
-		board.add(new Rook(new Position(0, 0), Color.White));
-		board.add(new Knight(new Position(1, 0), Color.White));
-		board.add(new Pawn(new Position(1, 1), Color.White));
-		board.add(new Pawn(new Position(2, 1), Color.White));
-		board.add(new Bishop(new Position(2, 0), Color.White));
-		board.add(new Queen(new Position(3, 0), Color.White));
-		board.add(new Pawn(new Position(3, 1), Color.White));
-		board.add(new King(new Position(4, 0), Color.White));
-		board.add(new Pawn(new Position(4, 1), Color.White));
-		board.add(new Bishop(new Position(5, 0), Color.White));
-		board.add(new Pawn(new Position(5, 1), Color.White));
-		board.add(new Knight(new Position(6, 0), Color.White));
-		board.add(new Pawn(new Position(6, 1), Color.White));
-		board.add(new Rook(new Position(7, 0), Color.White));
-		board.add(new Pawn(new Position(7, 1), Color.White));
-
-		board.add(new Pawn(new Position(0, 6), Color.Black));
-		board.add(new Rook(new Position(0, 7), Color.Black));
-		board.add(new Knight(new Position(1, 7), Color.Black));
-		board.add(new Pawn(new Position(1, 6), Color.Black));
-		board.add(new Pawn(new Position(2, 6), Color.Black));
-		board.add(new Bishop(new Position(2, 7), Color.Black));
-		board.add(new Queen(new Position(3, 7), Color.Black));
-		board.add(new Pawn(new Position(3, 6), Color.Black));
-		board.add(new King(new Position(4, 7), Color.Black));
-		board.add(new Pawn(new Position(4, 6), Color.Black));
-		board.add(new Bishop(new Position(5, 7), Color.Black));
-		board.add(new Pawn(new Position(5, 6), Color.Black));
-		board.add(new Knight(new Position(6, 7), Color.Black));
-		board.add(new Pawn(new Position(6, 6), Color.Black));
-		board.add(new Pawn(new Position(7, 6), Color.Black));
-		board.add(new Rook(new Position(7, 7), Color.Black));
-	}
-
 	public ArrayList<Figure> getContext() {
-		return board;
+		ArrayList<Figure> allFigures = new ArrayList<>();
+		for (Player player : players) {
+			allFigures.addAll(player.getFigures());
+		}
+		return allFigures;
 	}
 
 	public void addPlayer(Player player) {
@@ -66,42 +34,37 @@ public class BoardModelManager implements Observer {
 		}
 		if (currentPlayer == null) {
 			currentPlayer = player;
+			currentPlayer.setYourTurn(true);
 		}
 		players.add(player);
+		addObserver(player);
 	}
 
 	private void changePlayer() {
 		for (Player player : players) {
 			if (currentPlayer.getColor().equals(Color.White) && player.getColor().equals(Color.Black)) {
+				currentPlayer.setYourTurn(false);
 				currentPlayer = player;
+				currentPlayer.setYourTurn(true);
 				break;
 			} else if (currentPlayer.getColor().equals(Color.Black) && player.getColor().equals(Color.White)) {
+				currentPlayer.setYourTurn(false);
 				currentPlayer = player;
+				currentPlayer.setYourTurn(true);
 				break;
 			}
 		}
 	}
 
 	public Figure findFigure(Position position, Color color) {
-		for (Figure figure : board) {
-			if (figure.getPosition().equals(position)) {
-				if (figure.getColor().equals(color)) {
-					System.out.println("Your Figure!");
+		for (Player player : players) {
+			for (Figure figure : player.getFigures()) {
+				if (figure.getPosition().equals(position) && figure.getColor().equals(color)) {
 					return figure;
-				} else {
-					System.out.println("Not your Figure!");
 				}
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public void update(Position position) {
-		if (currentChosenFigure != null) {
-			currentChosenFigure.move(position);
-			currentChosenFigure = null;
-		}
 	}
 
 	public String moveFigure(Position from, Position to, Color color) {
@@ -120,10 +83,7 @@ public class BoardModelManager implements Observer {
 					return "Field taken";
 				}
 				System.out.println(figureToRemove + " Removed");
-				board.remove(figureToRemove);
-				if (figureToRemove instanceof King) {
-					return "Player " + currentPlayer.getColor().toString() + " won";
-				}
+				remove(figureToRemove);
 				currentChosenFigure.move(to);
 				changePlayer();
 				return "yes";
@@ -143,5 +103,22 @@ public class BoardModelManager implements Observer {
 		rootObj.put("time_white", (players.size() > 0) ? players.get(0).getTimeLeft() : 1000);
 		rootObj.put("time_black", (players.size() > 1) ? players.get(1).getTimeLeft() : 1000);
 		return rootObj;
+	}
+
+	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		observers.remove(o);
+	}
+
+	@Override
+	public void remove(Figure figure) {
+		for (Observer observer : observers) {
+			observer.remove(figure);
+		}
 	}
 }
