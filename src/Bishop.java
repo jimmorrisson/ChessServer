@@ -1,5 +1,3 @@
-import org.json.JSONObject;
-
 import chess.com.Position;
 
 public class Bishop extends Figure {

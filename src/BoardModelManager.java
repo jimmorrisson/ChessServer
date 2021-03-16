@@ -27,6 +27,7 @@ public class BoardModelManager implements Observer {
 		board.add(new Pawn(new Position(2, 1), Color.White));
 		board.add(new Bishop(new Position(2, 0), Color.White));
 		board.add(new Pawn(new Position(3, 1), Color.White));
+		board.add(new King(new Position(4, 0), Color.White));
 		board.add(new Pawn(new Position(4, 1), Color.White));
 		board.add(new Bishop(new Position(5, 0), Color.White));
 		board.add(new Pawn(new Position(5, 1), Color.White));
@@ -42,6 +43,7 @@ public class BoardModelManager implements Observer {
 		board.add(new Pawn(new Position(2, 6), Color.Black));
 		board.add(new Bishop(new Position(2, 7), Color.Black));
 		board.add(new Pawn(new Position(3, 6), Color.Black));
+		board.add(new King(new Position(4, 7), Color.Black));
 		board.add(new Pawn(new Position(4, 6), Color.Black));
 		board.add(new Bishop(new Position(5, 7), Color.Black));
 		board.add(new Pawn(new Position(5, 6), Color.Black));
