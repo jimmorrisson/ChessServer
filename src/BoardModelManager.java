@@ -98,8 +98,10 @@ public class BoardModelManager implements Observable{
 		for (Figure figure : getContext()) {
 			array.put(figure.toString());
 		}
+		for (Player player : players) {
+			rootObj.put("player_" + player.getColor().toString(), player.getState());
+		}
 		rootObj.put("board", array);
-
 		rootObj.put("time_white", (players.size() > 0) ? players.get(0).getTimeLeft() : 1000);
 		rootObj.put("time_black", (players.size() > 1) ? players.get(1).getTimeLeft() : 1000);
 		return rootObj;

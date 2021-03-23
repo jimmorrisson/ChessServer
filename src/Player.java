@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONObject;
+
 import chess.com.Position;
 
 public class Player implements Observer {
@@ -10,6 +12,7 @@ public class Player implements Observer {
     private Timer timer = new Timer();
     private ArrayList<Figure> figures = new ArrayList<>();
     private boolean isYourTurn = false;
+    private boolean lost = false;
 
     public Player(Color color) {
         this.color = color;
@@ -18,7 +21,12 @@ public class Player implements Observer {
             @Override
             public void run() {
                 if (isYourTurn) {
-                    timeLeft -= 1;
+                    if (timeLeft > 0) {
+                        timeLeft -= 1;
+                    } else {
+                        lost = true;
+                        timeLeft = 0;
+                    }
                 }
             }
         }, 1000, 1000);
@@ -83,9 +91,14 @@ public class Player implements Observer {
         if (figure != null && figure.getColor().equals(color)) {
             if (figure instanceof King) {
                 Color opposedColor = Utils.getOpposedColor(color);
+                lost = true;
                 System.out.println("Player " + opposedColor.toString() + " won");
             }
             figures.remove(figure);
         }
+    }
+
+    public String getState() {
+        return (lost) ? "lost" : "playing";
     }
 }
