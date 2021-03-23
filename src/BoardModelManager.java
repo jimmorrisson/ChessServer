@@ -82,9 +82,9 @@ public class BoardModelManager implements Observable{
 				if (findFigure(to, color) != null) {
 					return "Field taken";
 				}
+				currentChosenFigure.move(to);
 				System.out.println(figureToRemove + " Removed");
 				remove(figureToRemove);
-				currentChosenFigure.move(to);
 				changePlayer();
 				return "yes";
 			}

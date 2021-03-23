@@ -30,17 +30,62 @@ public class Pawn extends Figure {
 
     @Override
     public boolean isValid(Position position) {
+        Color opposedColor = Utils.getOpposedColor(getColor());
         if (getColor().equals(Color.Black)) {
             if (hasMoved == false) {
-                return (this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY())
-                        || (this.position.getX() == position.getX() && (this.position.getY() - 2) == position.getY());
+                if ((this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY())
+                        || (this.position.getX() == position.getX() && (this.position.getY() - 2) == position.getY())) {
+                    if (BoardModelManager.getInstance().findFigure(position, Color.White) != null
+                            || BoardModelManager.getInstance().findFigure(position, Color.Black) != null
+                            || BoardModelManager.getInstance()
+                                    .findFigure(new Position(position.getX(), this.position.getY() - 1), Color.White) != null
+                            || BoardModelManager.getInstance().findFigure(
+                                    new Position(position.getX(), this.position.getY() - 1), Color.Black) != null) {
+                        return false;
+                    }
+                    return true;
+                }
             }
-            return this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY();
+            if (this.position.getX() == position.getX() && (this.position.getY() - 1) == position.getY()) {
+                if (BoardModelManager.getInstance().findFigure(position, opposedColor) != null) {
+                    return false;
+                }
+                return true;
+            } else if ((this.position.getX() == position.getX() - 1 || this.position.getX() == position.getX() + 1)
+                    && (this.position.getY() - 1) == position.getY()) {
+                if (BoardModelManager.getInstance().findFigure(position, opposedColor) != null) {
+                    return true;
+                }
+                return false;
+            }
         }
         if (hasMoved == false) {
-            return (this.position.getX() == position.getX() && (this.position.getY() + 1) == position.getY())
-                    || (this.position.getX() == position.getX() && (this.position.getY() + 2) == position.getY());
+            if ((this.position.getX() == position.getX() && (this.position.getY() + 1) == position.getY())
+                    || (this.position.getX() == position.getX() && (this.position.getY() + 2) == position.getY())) {
+                if (BoardModelManager.getInstance().findFigure(position, Color.White) != null
+                        || BoardModelManager.getInstance().findFigure(position, Color.Black) != null
+                        || BoardModelManager.getInstance()
+                                .findFigure(new Position(position.getX(), this.position.getY() + 1), Color.White) != null
+                        || BoardModelManager.getInstance()
+                                .findFigure(new Position(position.getX(), this.position.getY() + 1), Color.Black) != null) {
+                    return false;
+                }
+                return true;
+            }
         }
-        return this.position.getX() == position.getX() && (this.position.getY() + 1) == position.getY();
+        if (this.position.getX() == position.getX() && (this.position.getY() + 1) == position.getY()) {
+            if (BoardModelManager.getInstance().findFigure(position, opposedColor) != null) {
+                return false;
+            }
+            return true;
+        }
+        if ((this.position.getX() == position.getX() - 1 || this.position.getX() == position.getX() + 1)
+                && (this.position.getY() + 1) == position.getY()) {
+            if (BoardModelManager.getInstance().findFigure(position, opposedColor) != null) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.json.JSONObject;
-
 import chess.com.Position;
 
 public class Player implements Observer {
