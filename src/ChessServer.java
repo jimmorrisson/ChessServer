@@ -10,6 +10,12 @@ public class ChessServer implements Runnable {
     private final Socket clientSocket;
     private final int players;
 
+    
+    /** Chess Server constructor
+     * @param socket
+     * @param players number of players connected to the server
+     * @throws IOException
+     */
     public ChessServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
         this.players = players;

@@ -7,28 +7,61 @@ public abstract class Figure {
     private Color color;
     private String name;
 
+    
+    /** Base interface for all Figures
+     * @param position start position
+     * @param color owner color
+     * @param name of the figure
+     */
     public Figure(Position position, Color color, String name) {
         this.position = position;
         this.color = color;
         this.name = name;
     }
 
+    
+    /** Gets position of the figure
+     * @return Position
+     */
     public Position getPosition() {
         return position;
     }
 
+    
+    /** Gets color of the figure
+     * @return Color
+     */
     public Color getColor() {
         return color;
     }
 
+    
+    /** Gets name of the figure
+     * @return String
+     */
     protected String getName() {
         return name;
     }
 
+    
+    /** Handles move from current position 
+     * to the passed position
+     * @param position to move to
+     * @return boolean True if move was successfull. False otherwise.
+     */
     public abstract boolean move(Position position);
 
+    
+    /** Gets unicode for the specfic figure
+     * @return String
+     */
     public abstract String getIcon();
 
+    
+    /** Sets position of the figure to the position passed
+     * @param position
+     * @return boolean
+     */
     protected boolean setPosition(Position position) {
         if (!isValid(position)) {
             return false;
@@ -37,8 +70,18 @@ public abstract class Figure {
         return true;
     }
 
+    
+    /** Checs if passed position is valid for the current figure
+     * @param position
+     * @return boolean
+     */
     public abstract boolean isValid(Position position);
 
+    
+    /** Checks if position is in the vertical axis of the figure
+     * @param position
+     * @return boolean
+     */
     protected boolean checkVerticalPosition(Position position) {
         boolean isPositiveVal = ((position.getY() - this.position.getY()) >= 0) ? true : false;
         int y = Math.abs(position.getY() - this.position.getY());
@@ -52,6 +95,11 @@ public abstract class Figure {
         return true;
     }
 
+    
+    /** Checks if position is in the horizontal axis of the figure
+     * @param position
+     * @return boolean
+     */
     protected boolean checkHorizontalPosition(Position position) {
         boolean isPositiveVal = ((position.getX() - this.position.getX()) >= 0) ? true : false;
         int x = Math.abs(position.getX() - this.position.getX());
@@ -65,6 +113,13 @@ public abstract class Figure {
         return true;
     }
 
+    
+    /** Checks if position is in the bias of the figure
+     * @param position
+     * @param xDifference
+     * @param yDifference
+     * @return boolean
+     */
     protected boolean checkBiasPosition(Position position, int xDifference, int yDifference) {
         int xDirection = (xDifference < 0) ? -1 : 1;
         int yDirection = (yDifference < 0) ? -1 : 1;
@@ -82,6 +137,10 @@ public abstract class Figure {
         return true;
     }
 
+    
+    /** Converts figure to the string of JSON type
+     * @return String
+     */
     @Override
     public String toString() {
         JSONObject object = new JSONObject();

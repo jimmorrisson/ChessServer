@@ -9,9 +9,17 @@ public class BoardModelManager implements Observable{
 	private ArrayList<Player> players = new ArrayList<>();
 	private ArrayList<Observer> observers = new ArrayList<>();
 
+	
+	/** Private constructor to prevent other instances
+	 */
 	private BoardModelManager() {
 	}
 
+	
+	/** Gets the only one instance of the BoardManager.
+	 * This sould be used to acces BoardModelManager.
+	 * @return BoardModelManager
+	 */
 	public static BoardModelManager getInstance() {
 		if (instance == null) {
 			instance = new BoardModelManager();
@@ -19,6 +27,10 @@ public class BoardModelManager implements Observable{
 		return instance;
 	}
 
+	
+	/** Gets current context of the board.
+	 * @return ArrayList All figures currently on the board.
+	 */
 	public ArrayList<Figure> getContext() {
 		ArrayList<Figure> allFigures = new ArrayList<>();
 		for (Player player : players) {
@@ -27,6 +39,10 @@ public class BoardModelManager implements Observable{
 		return allFigures;
 	}
 
+	
+	/** Handles player join.
+	 * @param player
+	 */
 	public void addPlayer(Player player) {
 		if (players.size() >= 2) {
 			System.out.println("Can't add more than 2 players!");
@@ -56,6 +72,12 @@ public class BoardModelManager implements Observable{
 		}
 	}
 
+	
+	/** Trying to find figure on the board.
+	 * @param position of the figure
+	 * @param color of the player
+	 * @return Figure 
+	 */
 	public Figure findFigure(Position position, Color color) {
 		for (Player player : players) {
 			for (Figure figure : player.getFigures()) {
@@ -67,6 +89,13 @@ public class BoardModelManager implements Observable{
 		return null;
 	}
 
+	
+	/** Tries to move figure from one position to another
+	 * @param from
+	 * @param to
+	 * @param color
+	 * @return String that is suppose to inform user if move failed or was success.
+	 */
 	public String moveFigure(Position from, Position to, Color color) {
 		if (currentPlayer.getColor().equals(color) == false) {
 			return "Not your turn";
@@ -92,6 +121,10 @@ public class BoardModelManager implements Observable{
 		return "No";
 	}
 
+	
+	/** Creates JSONObject for current board context.
+	 * @return JSONObject
+	 */
 	public JSONObject toJSon() {
 		JSONObject rootObj = new JSONObject();
 		JSONArray array = new JSONArray();
@@ -107,16 +140,28 @@ public class BoardModelManager implements Observable{
 		return rootObj;
 	}
 
+	
+	/** 
+	 * @param o
+	 */
 	@Override
 	public void addObserver(Observer o) {
 		observers.add(o);
 	}
 
+	
+	/** 
+	 * @param o
+	 */
 	@Override
 	public void removeObserver(Observer o) {
 		observers.remove(o);
 	}
 
+	
+	/** 
+	 * @param figure
+	 */
 	@Override
 	public void remove(Figure figure) {
 		for (Observer observer : observers) {

@@ -2,10 +2,20 @@ import chess.com.Position;
 
 public class Queen extends Figure {
 
+    
+    /** 
+     * @param position
+     * @param color
+     */
     public Queen(Position position, Color color) {
         super(position, color, "Queen");
     }
 
+    
+    /** 
+     * @param position
+     * @return boolean
+     */
     @Override
     public boolean move(Position position) {
         if (isValid(position)) {
@@ -17,6 +27,10 @@ public class Queen extends Figure {
         return false;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String getIcon() {
         if (this.getColor() == Color.Black) {
@@ -25,6 +39,11 @@ public class Queen extends Figure {
         return "♕";
     }
 
+    
+    /** 
+     * @param position
+     * @return boolean
+     */
     @Override
     public boolean isValid(Position position) {
         int xDifference = position.getX() - this.getPosition().getX();

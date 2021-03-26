@@ -12,6 +12,11 @@ public class Player implements Observer {
     private boolean isYourTurn = false;
     private boolean lost = false;
 
+    
+    /** Constructor of player
+     * @param color player color 
+     * Could be black/white
+     */
     public Player(Color color) {
         this.color = color;
         initializeFigures();
@@ -30,18 +35,34 @@ public class Player implements Observer {
         }, 1000, 1000);
     }
 
+    
+    /** Gets player color
+     * @return Color
+     */
     public Color getColor() {
         return color;
     }
 
+    
+    /** Gets time left for player
+     * @return int
+     */
     public int getTimeLeft() {
         return timeLeft;
     }
 
+    
+    /** Gets figures of player
+     * @return ArrayList
+     */
     public ArrayList<Figure> getFigures() {
         return figures;
     }
 
+    
+    /** Sets player turn
+     * @param value
+     */
     public void setYourTurn(boolean value) {
         isYourTurn = value;
     }
@@ -84,6 +105,10 @@ public class Player implements Observer {
         }
     }
 
+    
+    /** Handles figure removal from player
+     * @param figure
+     */
     @Override
     public void remove(Figure figure) {
         if (figure != null && figure.getColor().equals(color)) {
@@ -96,6 +121,11 @@ public class Player implements Observer {
         }
     }
 
+    
+    /** Get current state of player
+     * Possible states are lost/playing
+     * @return String
+     */
     public String getState() {
         return (lost) ? "lost" : "playing";
     }

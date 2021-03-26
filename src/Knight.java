@@ -1,10 +1,20 @@
 import chess.com.*;
 
 public class Knight extends Figure {
+    
+    /** 
+     * @param position
+     * @param color
+     */
     public Knight(Position position, Color color) {
         super(position, color, "Knight");
     }
 
+    
+    /** 
+     * @param position
+     * @return boolean
+     */
     @Override
     public boolean move(Position position) {
         if (isValid(position)) {
@@ -16,6 +26,10 @@ public class Knight extends Figure {
         return false;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String getIcon() {
         if (this.getColor() == Color.Black) {
@@ -24,6 +38,11 @@ public class Knight extends Figure {
         return "♘";
     }
 
+    
+    /** 
+     * @param position
+     * @return boolean
+     */
     @Override
     public boolean isValid(Position position) {
         if ((this.position.getX() == (position.getX() - 2) && this.position.getY() == (position.getY() - 1))

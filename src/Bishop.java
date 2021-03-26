@@ -2,10 +2,20 @@ import chess.com.Position;
 
 public class Bishop extends Figure {
 
+    /** Constructor for bishop
+     * @param position starting position
+     * @param color owner color
+     */
     public Bishop(Position position, Color color) {
         super(position, color, "Bishop");
     }
 
+    
+    /** Moves bishop from one position to another
+     * @param position
+     * @return boolean true if position is valid
+     * and move was succesfull. False otherwise
+     */
     @Override
     public boolean move(Position position) {
         if (isValid(position)) {
@@ -17,6 +27,10 @@ public class Bishop extends Figure {
         return false;
     }
 
+    
+    /** Gets icon of bishop
+     * @return String
+     */
     @Override
     public String getIcon() {
         if (this.getColor() == Color.Black) {
@@ -25,6 +39,12 @@ public class Bishop extends Figure {
         return "♗";
     }
 
+    
+    /** Check if bishop position is valid
+     * If it's valid it means that user is able to move to it.
+     * @param position
+     * @return boolean
+     */
     @Override
     public boolean isValid(Position position) {
         int xDifference = position.getX() - this.getPosition().getX();

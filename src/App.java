@@ -4,6 +4,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class App {
+    
+    /** Main function of program
+     * @param args
+     */
     public static void main(String[] args) {
 
         try {
