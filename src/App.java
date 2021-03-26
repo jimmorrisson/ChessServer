@@ -14,7 +14,7 @@ public class App {
 
             while (true) {
                 Socket socket = ss.accept();
-                Thread socketThread = new Thread(new FileServer(socket, players.size()));
+                Thread socketThread = new Thread(new ChessServer(socket, players.size()));
                 socketThread.start();
                 Player player = null;
                 if ((players.size() % 2) == 0) {
@@ -26,8 +26,8 @@ public class App {
                 boardManager.addPlayer(player);
             }    
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Fatal error: " + e.toString());
+            System.exit(0);
         }
     }
 }

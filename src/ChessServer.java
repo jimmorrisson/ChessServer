@@ -6,11 +6,11 @@ import java.net.Socket;
 
 import chess.com.*;
 
-public class FileServer implements Runnable {
+public class ChessServer implements Runnable {
     private final Socket clientSocket;
     private final int players;
 
-    public FileServer(final Socket socket, final int players) throws IOException {
+    public ChessServer(final Socket socket, final int players) throws IOException {
         clientSocket = socket;
         this.players = players;
     }
@@ -45,15 +45,10 @@ public class FileServer implements Runnable {
                         objectOutputStream.flush();
                     }
             }
-            // objectInputStream.close();
-            // dataInputStream.close();
-            // objectOutputStream.close();
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 }
